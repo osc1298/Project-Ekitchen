@@ -1,0 +1,51 @@
+﻿@model ekitchen.Models.CocinerosModel.RecetaModel
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+
+    if (@HttpContextAccessor.HttpContext.Session.GetInt32("Perfil") == 1)
+    {
+        Layout = "_LayoutCocinero";
+    }
+}
+<h1 id="login-title" class="text-center">Crear Receta</h1>
+<div id="login-container" class="container">
+    <div class="alert-danger">@TempData["Error"]</div>
+    <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <form asp-action="CrearReceta" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <label asp-for="Nombre">Nombre: </label>
+            <input asp-for="Nombre" class="form-control col-xs-12" type="text" name="Nombre" id="Nombre">
+            <span asp-validation-for="Nombre"></span>
+            <br>
+            <label asp-for="TiempoCoccion">Timpo de Coccion (En hs):</label>
+            <input asp-for="TiempoCoccion" class="form-control col-xs-12" type="number" name="TiempoCoccion" id=TiempoCoccion>
+            <span asp-validation-for="TiempoCoccion"></span>
+            <br>
+            <label asp-for="Descripcion">Descripcion:</label>
+            <input asp-for="Descripcion" class="form-control col-xs-12" type="text" name="Descripcion" id=Descripcion>
+            <span asp-validation-for="Descripcion"></span>
+            <br>
+            <label asp-for="Ingredientes">Ingredientes:</label>
+            <input asp-for="Ingredientes" class="form-control col-xs-12" type="text" name="Ingredientes" id=Ingredientes>
+            <span asp-validation-for="Ingredientes"></span>
+            <br>
+            <label asp-for="IdTipoReceta">Tipo de Receta:</label>
+            <select asp-for="IdTipoReceta" class="form-control col-xs-12" name="IdTipoReceta" id=IdTipoReceta>
+                @foreach (var rece in ViewBag.ListaTipoRecetas)
+                {
+                    <option value="@rece.Id">@rece.Descripcion</option>
+                }
+            </select>
+            <span asp-validation-for="IdTipoReceta"></span>
+            <br>
+            <input id="submit-button" name="enviar" class="btn btn-info pull-right" type="submit" value="Crear Receta">
+        </form>
+    </div>
+</div>
+<br>
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+
+}

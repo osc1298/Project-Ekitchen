@@ -1,0 +1,40 @@
+﻿@model List<ekitchen.Entidades.EF.Receta>
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+
+    if (@HttpContextAccessor.HttpContext.Session.GetInt32("Perfil") == 1)
+    {
+        Layout = "_LayoutCocinero";
+        
+    }
+}
+<h1 id="login-title" class="text-center">Listado de Recetas</h1>
+<div class="container">
+
+    <table class="table table-hover bg-dark">
+        <thead>
+            <tr>
+                <th class="text-light">Nombre</th>
+                <th class="text-light">Descripción</th>
+                <th class="text-light">Ingredientes</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var receta in Model)
+            {
+                <tr>
+                    <td> @receta.Nombre</td>
+                    <td> @receta.Descripcion</td>
+                    <th> @receta.Ingredientes</th>
+                    <td class="text-right">
+                    <a href="/Cocinero/BorrarReceta?IdReceta=@receta.IdReceta" class="btn btn-sm btn-danger">
+                    <i class="fa fa-trash"></i> 
+                    </a> 
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>

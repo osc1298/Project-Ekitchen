@@ -1,0 +1,73 @@
+﻿@model ekitchen.Models.CocinerosModel.PerfilModel
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+
+    if (@HttpContextAccessor.HttpContext.Session.GetInt32("Perfil") == 1)
+    {
+        Layout = "_LayoutCocinero";
+    }
+}
+<h1 id="login-title" class="text-center">Perfil</h1>
+<div class="container container-fluid">
+    <div class="form-group">
+        <div class="form-control">
+            <p class="text text-sm-left">
+                <strong>Email:</strong>  @Model.Email
+            </p>
+        </div>
+        <br>
+        <div class="form-control">
+            <p class="text text-sm-left">
+                <strong>Fecha Registracion:</strong>
+                @Model.FechaRegistracion
+            </p>
+        </div>
+        <br>
+        <div class="form-control">
+            <p class="text text-sm-left">
+                <strong>Cantidad de Recetas:</strong>
+                @Model.CantidadRecetas
+            </p>
+        </div>
+    </div>
+    <div class="container container-fluid">
+        
+        <div class="container" id="food">
+            <h2>Recetas: </h2>
+            <div class="card-deck">
+                @foreach (var evento in Model.ListaRecetas)
+                {
+                    <div class="col-md-4 d-flex justify-content-around">
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">@evento.Nombre</h5>
+                                <p class="card-text">@evento.Descripcion</p>
+                            </div>
+                        </div>
+
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="container container-fluid">
+        <div class="container" id="food">
+            <h2>Eventos:</h2>
+        <div class="card-deck">
+            @foreach (var evento in Model.ListaEventos)
+            {
+                <div class="col-md-4 d-flex justify-content-around">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">@evento.Nombre</h5>
+                            <p class="card-text">Fecha: @evento.Fecha</p>
+                            <p class="card-text">Cantidad Comensales: @evento.CantidadComensales</p>
+                            <p class="card-text">Precio: @evento.Precio</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

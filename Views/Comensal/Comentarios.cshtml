@@ -1,0 +1,38 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@model ekitchen.Models.ComentariosModel.ComentarioModel
+@{
+    if (@HttpContextAccessor.HttpContext.Session.GetInt32("Perfil") == 2)
+    {
+        Layout = "_LayoutComensal";
+
+    }
+}
+<h1 id="login-title" class="text-center">Dejanos tu Comentario</h1>
+<div class="container-fluid">
+    
+    <form asp-action="Comentario" asp-controller="Comensal" method="post" class="form-group">
+        <label for="Puntuacion">Puntuacion</label>
+        <input type="radio" name="Calificacion" id=1 value=1 checked>
+        <label for=1>1<i class="fa fa-star" aria-hidden="true"></i></label>
+        <input type="radio" name="Calificacion" id=2 value=2>
+        <label for=2>2<i class="fa fa-star" aria-hidden="true"></i></label>
+        <input type="radio" name="Calificacion" id=3 value=3>
+        <label for=3>3<i class="fa fa-star" aria-hidden="true"></i></label>
+        <input type="radio" name="Calificacion" id=4 value=4>
+        <label for=4>4<i class="fa fa-star" aria-hidden="true"></i></label>
+        <input type="radio" name="Calificacion" id=5 value=5>
+        <label for=5>5<i class="fa fa-star" aria-hidden="true"></i></label>
+        <span asp-validation-for="Calificacion"></span>
+        <div class="mb-3">
+            <label asp-for="Comentarios" class="form-label">Ingrese su opinion</label>
+            <textarea asp-for="Comentarios" class="form-control" id="comentarios" name="Comentarios" rows="3"></textarea>
+            <span asp-validation-for="Comentarios"></span>
+        </div>
+        <div class="mb-3">
+            <input class="form-control" id="IdEvento" name="IdEvento" value="@ViewBag.idEvento" hidden="hidden">
+            <input type="submit" class="form-control btn-info" id="enviar" name="enviar" value="Comentar">
+        </div>
+
+    </form>
+</div>

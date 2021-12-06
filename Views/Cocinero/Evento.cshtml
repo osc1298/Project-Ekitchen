@@ -1,0 +1,99 @@
+﻿@model ekitchen.Models.CocinerosModel.EventoModel
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+
+    if (@HttpContextAccessor.HttpContext.Session.GetInt32("Perfil") == 1)
+    {
+        Layout = "_LayoutCocinero";
+    }
+}
+<h1 id="login-title" class="text-center">Crear Evento</h1>
+<div id="login-container" class="container">
+    <div class="alert-danger">@TempData["Error"]</div>
+    @if (ViewBag.ListaRecetas == null && TempData["Error"] == null)
+    {
+        <br /><br />
+        <div class="alert alert-warning text-center">
+            <strong>No tenes recetas cargadas</strong>
+            <br />Agregalas desde
+            <a href="/Cocinero/NuevaReceta" class="btn btn-link"><strong>aca</strong></a>
+            antes de crear el evento.
+        </div>
+    }
+    else
+    {
+        <div id="loginbox" style="margin-top:50px;" class="container-fluid">
+            <form asp-action="Evento" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <label asp-for="Nombre">Nombre: </label>
+                <input asp-for="Nombre" class="form-control col-xs-12" type="text" name="Nombre" id="Nombre">
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+                <br>
+                <label asp-for="Fecha">Fecha:</label>
+                <div class="col-xs-12" style="height:130px;">
+                    <div class="form-group">
+                        <div class='input-group date' id='datetimepicker8'>
+                            <input type='text' id="Fecha" name="Fecha" class="form-control" />
+                            <span class="input-group-addon">
+                                <span class="fa fa-calendar">
+                                </span>
+                            </span>
+                        </div>
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#datetimepicker8').datetimepicker({
+                                    format: 'DD/MM/YYYY HH:mm:ss',
+                                    icons: {
+                                        time: "fa fa-clock",
+                                        date: "fa fa-calendar",
+                                        up: "fa fa-arrow-up",
+                                        down: "fa fa-arrow-down",
+                                        next: "fa fa-arrow-right",
+                                        previous: "fa fa-arrow-left"
+                                    }
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+                <span asp-validation-for="Fecha" class="text-danger"></span>
+                
+
+                <label asp-for="CantidadComensales">Cantidad de Comensales:</label>
+                <input asp-for="CantidadComensales" type="number" class="form-control col-xs-12" name="CantidadComensales" id=CantidadComensales>
+                <span asp-validation-for="CantidadComensales" class="text-danger"></span>
+                <br>
+                <label asp-for="Ubicacion">Ubicacion:</label>
+                <input asp-for="Ubicacion" type="text" class="form-control col-xs-12" name="Ubicacion" id=Ubicacion>
+                <span asp-validation-for="Ubicacion" class="text-danger"></span>
+                <br>
+                <label asp-for="Foto">Foto del Evento:</label>
+                <input asp-for="Foto" class="form-control col-xs-12" accept="/image/*" name="Foto" id=Foto>
+                <span asp-validation-for="Foto" class="text-danger"></span>
+                <br>
+                <label asp-for="Precio">Precio:</label>
+                <input asp-for="Precio" type="text" class="form-control col-xs-12" name="Precio" id=Precio>
+                <span asp-validation-for="Precio" class="text-danger"></span>
+                <br>
+                <label asp-for="IdsRecetas">Recetas:</label>
+                <br />
+                <select asp-for="IdsRecetas" class="form-control col-xs-12" multiple name="IdsRecetas" id=IdsRecetas>
+                    @foreach (var rece in ViewBag.ListaRecetas)
+                    {
+                        <option value="@rece.IdReceta">@rece.Descripcion</option>
+                    }
+                </select>
+                <span asp-validation-for="IdsRecetas" class="text-danger"></span>
+                <br /><br />
+                <input id="submit-button" name="enviar" class="btn btn-info pull-right" type="submit" value="Crear Evento">
+            </form>
+        </div>
+    }
+</div>
+<br>
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+
+}

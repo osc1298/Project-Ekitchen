@@ -1,0 +1,53 @@
+﻿@model List<ekitchen.Entidades.EF.Receta>
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+
+    if (@HttpContextAccessor.HttpContext.Session.GetInt32("Perfil") == 1)
+    {
+        Layout = "_LayoutCocinero";
+
+    }
+}
+<h1 id="login-title" class="text-center">Listado de Recetas</h1>
+<div class="alert-success">@TempData["Resultado"]</div>
+<div class="container">
+    <div class="row">
+        <a class="btn btn-info" href="/Cocinero/NuevaReceta">Nueva receta</a>
+    </div>
+    <br />
+    <table class="table table-hover bg-light">
+        <thead class="bg-dark">
+            <tr>
+                <th class="text-light">Nombre</th>
+                <th class="text-light">Descripción</th>
+                <th class="text-light">Ingredientes</th>
+                <th class="text-light">#</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var receta in Model)
+            {
+                <tr>
+                    <td> @receta.Nombre</td>
+                    <td> @receta.Descripcion</td>
+                    <th> @receta.Ingredientes</th>
+                    <td class="text-right">
+                        @if (receta.EventosReceta.Count() > 0)
+                         {
+                            <button type="button" disabled><i class="fa fa-trash" aria-hidden="true"></i></button>
+                            <p class="alert alert-warning small text-sm-center">Receta ya asociada a Eventos. No se puede borrar</p>
+                         }
+                        else
+                        {
+                            <a href="/Cocinero/BorrarReceta?IdReceta=@receta.IdReceta" class="btn btn-sm btn-danger">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </a>
+                        }
+                        </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>

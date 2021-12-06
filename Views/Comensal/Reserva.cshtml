@@ -1,0 +1,47 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@using ekitchen.Entidades.EF
+@model List<Evento>
+@{
+    if (@HttpContextAccessor.HttpContext.Session.GetInt32("Perfil") == 2)
+    {
+        Layout = "_LayoutComensal";
+
+    }
+}
+@if (@TempData["Error"] != null)
+{
+<p class="alert alert-danger">@TempData["Error"]</p>
+}
+<br />
+<h1 id="login-title" class="text-center">Eventos Disponibles</h1>
+<br />
+<div class="container">
+   @if(@Model.Count()>0)
+    {
+    <div class="container" id="food">
+        <div class="card-deck">
+            @foreach (var item in Model)
+            {
+                <div class="col-6">
+                    <div class="card" style="width: 18rem;">
+                        <img src="~/images/carrousel/@item.Foto" class="card-img-top img-thumbnail" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Nombre</h5>
+                            <p class="card-text">Fecha del evento: @item.Fecha </p>
+                            <p class="card-text">Ubicacion @item.Ubicacion</p>
+                            <p class="card-text">Valor de entrada $@item.Precio</p>
+
+                            <a href="/Comensal/Reservar/@item.IdEvento" class="btn btn-info">Reservar</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    }
+    @if(@Model.Count()==0)
+    {
+    <p class="alert alert-warning">No hay Eventos Disponibles</p>
+    }
+</div>

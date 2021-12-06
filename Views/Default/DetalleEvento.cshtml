@@ -1,0 +1,87 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+
+   
+    @model ekitchen.Models.EventosModel.EventoDetalle
+}
+<h1 id="login-title" class="text-center">Detalles de Evento</h1>
+<br />
+    <section>
+        <div class="container mt-2 ">
+            <div class="row ">
+                <div class="col-sm-3 col-md-6 col-lg-4 d-flex justify-content-center ">
+                    <img class="img-thumbnail" src="~/images/carrousel/@Model.Foto" alt="@Model.Foto" style="width:90%;height: 95%">
+                </div>
+                <div class="col-sm-9 col-md-6 col-lg-8 shadow p-4 mb-4 bg-light">
+                    <div class="container bg-light ">
+                        <div class="row">
+                            <div class="col-lg-4 titulos"><h1>@Model.Nombre</h1> </div>
+
+                            <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+                            <div class="col-lg-3 ">
+                                <h3>Cocinero:</h3>
+                            </div>
+                            <div class="col-lg-9 pt-2 ">@Model.NombreCocinero</div>
+                            <div class="col-lg-3">
+                                <h3>Precio:</h3>
+                            </div>
+                            <div class="col-lg-9 pt-2"><span style="font-size:20px">@Model.Precio</span></div>
+
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mx-auto bg-dark">
+            <h3 class="col-lg-12 text-light">Reseñas del Evento: </h3>
+
+            <div class="w3-row-padding w3-padding-16 w3-center row" id="food">
+                <div class="container" id="food">
+                    <div class="card-deck">
+
+                        @foreach (var coment in Model.Calificacione)
+                        {
+                            <div class="card col-12 mx-3 my-3 ">
+                                <div class="card-header ">
+
+                                    @if (coment.Calificacion == 1)
+                                    {
+                                        <h6 class="card-subtitle mb-2 text-muted">1 estrella <i class="fas fa-star text-warning"></i></h6>
+                                    }
+                                    @if (coment.Calificacion == 2)
+                                    {
+                                        <h6 class="card-subtitle mb-2 text-muted">2 estrellas <i class="fas fa-star text-warning"></i> <i class="fas fa-star text-warning"></i></h6>
+                                    }
+                                    @if (coment.Calificacion == 3)
+                                    {
+                                        <h6 class="card-subtitle mb-2 text-muted">3 estrellas <i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i> <i class="fas fa-star text-warning"></i></h6>
+                                    }
+                                    @if (coment.Calificacion == 4)
+                                    {
+                                        <h6 class="card-subtitle mb-2 text-muted">4 estrellas <i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i> <i class="fas fa-star text-warning"></i></h6>
+                                    }
+                                    @if (coment.Calificacion == 5)
+                                    {
+                                        <h6 class="card-subtitle mb-2 text-muted">5 estrellas <i class="fas fa-star text-warning"></i> <i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i><i class="fas fa-star text-warning"></i></h6>
+                                    }
+                                </div>
+                                <div class="card-body">
+                                    <blockquote class="blockquote mb-0">
+                                        <p>@coment.Comentarios</p>
+                                    </blockquote>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </section>

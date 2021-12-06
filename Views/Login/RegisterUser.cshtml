@@ -1,0 +1,38 @@
+﻿@model ekitchen.Models.UsuariosModel.UsuarioModel
+
+<h1 id="login-title" class="text-center">Formulario de registro</h1>
+<div id="login-container" class="container">
+    <div class="alert-danger">@TempData["Error"]</div>
+    <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <form asp-action="RegistrarUsuario" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <label asp-for="Nombre">Nombre: </label>
+            <input asp-for="Nombre" class="form-control col-xs-12" type="text" name="Nombre" id="Nombre">
+            <span asp-validation-for="Nombre"></span>
+            <br>
+            <label for="Perfil">Pefil:</label>
+            <input type="radio" name="Perfil" id=1 value=1 checked>
+            <label for="Chef">Chef</label>
+            <input type="radio" name="Perfil" id=2 value=2>
+            <label for="Comensal">Comensal</label>
+            <span asp-validation-for="Perfil"></span>
+            <br>
+            <label for="Email">Email:</label>
+            <input class="form-control col-xs-12" type="text" name="Email" id="Email" required>
+            <span asp-validation-for="Email"></span>
+            <br>
+            <label for="Password">Contraseña: </label>
+            <input class="form-control col-xs-12" type="password" name="Password" id="Password" required>
+            <span asp-validation-for="Password"></span>
+            <br>
+            <label for="ConfirmPassword">Repita su contraseña: </label>
+            <input class="form-control col-xs-12" type="password" name="ConfirmPassword" id="ConfirmPassword" required>
+            <span asp-validation-for="ConfirmPassword"></span>
+            <br>
+            <input id="submit-button" name="enviar" class="btn btn-info pull-right" type="submit" value="Registrarse">
+        </form>
+    </div>
+</div>
+<br>
+<br>
+<br>

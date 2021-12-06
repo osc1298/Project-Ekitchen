@@ -1,0 +1,66 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@using ekitchen.Entidades.EF;
+@model List<ekitchen.Models.ComensalesModel.EventoComentarioModel>
+@{
+    if (@HttpContextAccessor.HttpContext.Session.GetInt32("Perfil") == 2)
+    {
+        Layout = "_LayoutComensal";
+
+    }
+}
+<h1 id="login-title" class="text-center">Mis Eventos</h1>
+<div class="container">
+    <div class="alert-success">@TempData["Reseva"]</div>
+    <div class="alert-success">@TempData["Error"]</div>
+    
+
+    @if (@Model is not null)
+    {
+        <table class="table bg-light">
+            <thead class="bg-dark">
+                <tr>
+                    <th scope="col" class="text-light">Fecha De evento</th>
+                    <th scope="col" class="text-light">Nombre </th>
+                    <th scope="col" class="text-light">estado</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Fecha</td>
+                        <td>@item.Nombre</td>
+                        <td>
+                            @if (@item.Estado == 1)
+                            {
+                                <p class="text-success">Evento Activo</p>
+                            }
+                            @if (@item.Estado == 4)
+                            {
+                                <p class="text-warning">Evento Cancelado</p>
+                            }
+                            @if (@item.Estado == 3)
+                            {
+                                <p class="text-info">Evento Terminado</p>
+                                @if (@item.CantidadCalificaciones > 0)
+                                {
+                                    <p class="alert-info disabled">Evento Comentado</p>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-link" href="/Comensal/Comentar/@item.IdEvento">Agregar Comentario</a>
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p class="alert alert-warning">Aun no tiene Reservas hechas</p>
+    }
+</div>
